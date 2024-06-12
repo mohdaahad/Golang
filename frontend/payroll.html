@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Payroll Management</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <h1>Payroll Management</h1>
+    <form id="payroll-form">
+        <label for="employee-id">Employee ID:</label>
+        <input type="text" id="employee-id" name="employee-id" required>
+        <label for="salary">Salary:</label>
+        <input type="number" id="salary" name="salary" required>
+        <button type="submit">Process Payroll</button>
+    </form>
+    
+    <h2>Payroll Records</h2>
+    <ul id="payroll-list">
+        <!-- List of payroll records will be populated here -->
+    </ul>
+    
+    <script src="js/scripts.js"></script>
+    <script>
+        document.getElementById('payroll-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const employeeId = document.getElementById('employee-id').value;
+            const salary = document.getElementById('salary').value;
+            
+            fetch('/payroll-management', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ employee_id: employeeId, salary: salary })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const li = document.createElement('li');
+                    li.textContent = `Employee ID: ${data.payroll.employee_id}, Salary: ${data.payroll.salary}`;
+                    document.getElementById('payroll-list').appendChild(li);
+                } else {
+                    alert('Failed to process payroll');
+                }
+            });
+        });
+
+        window.onload = function() {
+            fetch('/payroll-management')
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const payrollList = document.getElementById('payroll-list');
+                    data.payrolls.forEach(payroll => {
+                        const li = document.createElement('li');
+                        li.textContent = `Employee ID: ${payroll.employee_id}, Salary: ${payroll.salary}`;
+                        payrollList.appendChild(li);
+                    });
+                } else {
+                    alert('Failed to load payroll records');
+                }
+            });
+           
+        };
+    </script>
+</body>
+</html>

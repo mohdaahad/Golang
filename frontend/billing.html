@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Billing Management</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <h1>Billing Management</h1>
+    <form id="billing-form">
+        <label for="customer-id">Customer ID:</label>
+        <input type="text" id="customer-id" name="customer-id" required>
+        <label for="amount">Amount:</label>
+        <input type="number" id="amount" name="amount" required>
+        <button type="submit">Generate Bill</button>
+    </form>
+
+
+    <ul id="billing-list">
+        <!-- List of billing records will be populated here -->
+    </ul> 
+    
+    <script src="js/scripts.js"></script>
+    <script>
+        document.getElementById('billing-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const customerId = document.getElementById('customer-id').value;
+            const amount = document.getElementById('amount').value;
+            
+            fetch('/billing-management', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ customer_id: customerId, amount: amount })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const li = document.createElement('li');
+                    li.textContent = `Customer ID: ${data.billing.customer_id}, Amount: ${data.billing.amount}`;
+                    document.getElementById('billing-list').appendChild(li);
+                } else {
+                    alert('Failed to generate bill');
+                }
+            });
+        });
+
+        window.onload = function() {
+            fetch('/billing-management')
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const billingList = document.getElementById('billing-list');
+                    data.billings.forEach(billing => {
+                        const li = document.createElement('li');
+                        li.textContent = `Customer ID: ${billing.customer_id}, Amount: ${billing.amount}`;
+                        billingList.appendChild(li);
+                    });
+                } else {
+                    alert('Failed to load billing records');
+                }
+            });
+        };
+    </script>
+</body>
+</html>

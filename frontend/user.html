@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Management</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <h1>User Management</h1>
+    <form id="user-form">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+        <label for="role">Role:</label>
+        <select id="role" name="role" required>
+            <option value="sales">Sales</option>
+            <option value="accountant">Accountant</option>
+            <option value="hr">HR</option>
+            <option value="admin">Administrator</option>
+        </select>
+        <button type="submit">Add User</button>
+    </form>
+    
+    <h2>User List</h2>
+    <ul id="user-list">
+        <!-- List of users will be populated here -->
+    </ul>
+    
+    <script src="js/scripts.js"></script>
+    <script>
+        document.getElementById('user-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const role = document.getElementById('role').value;
+            
+            fetch('/user-management', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username: username, password: password, role: role })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const li = document.createElement('li');
+                    li.textContent = `${data.user.username} (${data.user.role})`;
+                    document.getElementById('user-list').appendChild(li);
+                } else {
+                    alert('Failed to add user');
+                }
+            });
+        });
+
+        window.onload = function() {
+            fetch('/user-management')
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const userList = document.getElementById('user-list');
+                    data.users.forEach(user => {
+                        const li = document.createElement('li');
+                        li.textContent = `${user.username} (${user.role})`;
+                        userList.appendChild(li);
+                    });
+                } else {
+                    alert('Failed to load users');
+                }
+            });
+        };
+    </script>
+</body>
+</html>
+
