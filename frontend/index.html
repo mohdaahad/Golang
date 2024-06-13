@@ -6,7 +6,72 @@
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <h1>Welcome to the Management System</h1>
-    <a href="login.html">Login</a>
+    <div class="card">
+        <h1>Welcome to the Management System</h1>
+        <a href="login.html">Login</a>
+    </div>
+    <div id="management-container"  style="display: none;">
+        <h1>Welcome <span id="welcome-name"></span> to the Management System</h1>
+        <div class="button">
+            <button id="file1" onclick="navigate('bill')">Billing</button>
+            <button id="file2" onclick="navigate('user')">User</button>
+            <button id="file3" onclick="navigate('payroll')">Payroll</button>
+            <button id="file4" onclick="navigate('customer')">Customer</button>
+            <button id="logout-btn" onclick="logout()">Logout</button>
+        </div>
+       
+    </div>
+    
+    <script>
+        window.onload = function() {
+            const isLoggedIn = checkLoginStatus(); // Function to check if user is logged in
+            
+            if (isLoggedIn) {
+                const username = getLoggedInUsername(); // Function to get logged-in username
+                document.getElementById('welcome-name').textContent = username;
+                document.querySelector('.card').style.display = 'none';
+                document.getElementById('management-container').style.display = 'flex';
+            }
+        };
+        
+        function checkLoginStatus() {
+            // Your logic to check if user is logged in
+            // Example: You might check if there's a token in localStorage or a session cookie
+            // Return true if logged in, false otherwise
+            return true; // For demonstration purposes
+        }
+        
+        function getLoggedInUsername() {
+            // Your logic to get the logged-in user's username
+            // Example: You might retrieve the username from localStorage or a session cookie
+            return "HR"; // For demonstration purposes
+        }
+        
+        function navigate(section) {
+            // Your code to navigate to different sections based on the clicked button
+            switch (section) {
+                case 'bill':
+                    window.location.href = 'billing.html';
+                    break;
+                case 'user':
+                    window.location.href = 'user.html';
+                    break;
+                case 'payroll':
+                    window.location.href = 'payroll.html';
+                    break;
+                case 'customer':
+                    window.location.href = 'customer.html';
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        function logout() {
+            // Your code to handle logout
+            // Example: Clearing localStorage, session cookie, or sending logout request to server
+            console.log("Logout");
+        }
+    </script>
 </body>
 </html>

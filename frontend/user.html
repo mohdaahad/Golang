@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+    <div class="card">
     <h1>User Management</h1>
     <form id="user-form">
         <label for="username">Username:</label>
@@ -26,7 +27,8 @@
     <ul id="user-list">
         <!-- List of users will be populated here -->
     </ul>
-    
+    <a href="index.html" class="back-btn">Home</a>
+</div>
     <script src="js/scripts.js"></script>
     <script>
         document.getElementById('user-form').addEventListener('submit', function(event) {

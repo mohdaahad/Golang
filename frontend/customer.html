@@ -6,27 +6,30 @@
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <h1>Customer Management</h1>
-    <form id="customer-form">
-        <label for="customer-name">Customer Name:</label>
-        <input type="text" id="customer-name" name="customer-name" required>
-        <label for="customer-email">Customer Email:</label>
-        <input type="email" id="customer-email" name="customer-email" required>
-        <button type="submit" id="submit-btn">Add Customer</button>
-    </form>
-    
-    <h2>Customer List</h2>
-    <ul id="customer-list">
-        <!-- List of customers will be populated here -->
-    </ul>
-    
+    <div class="card">
+        <h1>Customer Management</h1>
+        <form id="customer-form">
+            <label for="customer-name">Customer Name:</label>
+            <input type="text" id="customer-name" name="customer-name" required>
+            <label for="customer-email">Customer Email:</label>
+            <input type="email" id="customer-email" name="customer-email" required>
+            <button type="submit" id="submit-btn">Add Customer</button>
+        </form>
+   
+
+        <h2>Customer List</h2>
+        <ul id="customer-list">
+            <!-- List of customers will be populated here -->
+        </ul>
+        <a href="index.html" class="back-btn">Home</a>
+    </div>
     <script src="js/scripts.js"></script>
     <script>
         function addCustomer(event) {
             event.preventDefault();
             const customerName = document.getElementById('customer-name').value;
             const customerEmail = document.getElementById('customer-email').value;
-            
+
             fetch('/customers', {
                 method: 'POST',
                 headers: {

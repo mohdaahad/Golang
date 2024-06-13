@@ -6,20 +6,22 @@
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <h1>Billing Management</h1>
-    <form id="billing-form">
-        <label for="customer-id">Customer ID:</label>
-        <input type="text" id="customer-id" name="customer-id" required>
-        <label for="amount">Amount:</label>
-        <input type="number" id="amount" name="amount" required>
-        <button type="submit">Generate Bill</button>
-    </form>
+    <div class="card">
+        <h1>Billing Management</h1>
+        <form id="billing-form">
+            <label for="customer-id">Customer ID:</label>
+            <input type="text" id="customer-id" name="customer-id" required>
+            <label for="amount">Amount:</label>
+            <input type="number" id="amount" name="amount" required>
+            <button type="submit">Generate Bill</button>
+        </form>
 
+        <ul id="billing-list">
+            <!-- List of billing records will be populated here -->
+        </ul> 
+        <a href="index.html" class="back-btn">Home</a>
+    </div>
 
-    <ul id="billing-list">
-        <!-- List of billing records will be populated here -->
-    </ul> 
-    
     <script src="js/scripts.js"></script>
     <script>
         document.getElementById('billing-form').addEventListener('submit', function(event) {

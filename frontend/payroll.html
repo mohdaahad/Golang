@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+    <div class="card">
     <h1>Payroll Management</h1>
     <form id="payroll-form">
         <label for="employee-id">Employee ID:</label>
@@ -19,7 +20,8 @@
     <ul id="payroll-list">
         <!-- List of payroll records will be populated here -->
     </ul>
-    
+    <a href="index.html" class="back-btn">Home</a>
+    </div>
     <script src="js/scripts.js"></script>
     <script>
         document.getElementById('payroll-form').addEventListener('submit', function(event) {
